@@ -2,41 +2,44 @@
 let humanScore = 0;
 let computerScore = 0;
 
-function playRound() {
+const rockBtn = document.getElementById('rock');
+const paperBtn = document.querySelector('#paper');
+const scissorsBtn = document.querySelector('#scissors');
+const gameResultDiv = document.querySelector('#game-result');
+
+rockBtn.addEventListener('click', () => {
+    humanChoice = 'rock';
+
+    playRound(humanChoice, computerChoice)
+});
+
+paperBtn.addEventListener('click', () => {
+    humanChoice = 'paper';
+
+    playRound(humanChoice, computerChoice)
+});
+
+scissorsBtn.addEventListener('click', () => {
+    humanChoice = 'scissors';
+
+    playRound(humanChoice, computerChoice)
+});
+
+function playRound(humanChoice, computerChoice) {
 
     let humanChoice = null;
     let computerChoice = null;
 
     const playerChoiceDiv = document.querySelector('#player-choice');
-    const rockBtn = document.getElementById('rock');
-    rockBtn.addEventListener('click', () => {
-        humanChoice = 'rock';
 
-        playerChoiceDiv.textContent = `You chose ${humanChoice}!`;
-        
-        computerChoice = getComputerChoice();
-        calculateRoundResult(humanChoice, computerChoice)
-    });
+    rockBtn.disabled = false;
+    paperBtn.disabled = false;
+    scissorsBtn.disabled = false;
 
-    const paperBtn = document.querySelector('#paper');
-    paperBtn.addEventListener('click', () => {
-        humanChoice = 'paper';
+    playerChoiceDiv.textContent = `You chose ${humanChoice}!`;
 
-        playerChoiceDiv.textContent = `You chose ${humanChoice}!`;
-        
-        computerChoice = getComputerChoice();
-        calculateRoundResult(humanChoice, computerChoice)
-    });
-
-    const scissorsBtn = document.querySelector('#scissors');
-    scissorsBtn.addEventListener('click', () => {
-        humanChoice = 'scissors';
-
-        playerChoiceDiv.textContent = `You chose ${humanChoice}!`;
-        
-        computerChoice = getComputerChoice();
-        calculateRoundResult(humanChoice, computerChoice)
-    });
+    computerChoice = getComputerChoice();
+    calculateRoundResult(humanChoice, computerChoice)
 }
 
 function getComputerChoice() {
@@ -109,11 +112,6 @@ function updateScore(humanWin, computerWin, tie) {
 
     if (humanScore === 5 || computerScore === 5) {
 
-
-        const rockBtn = document.querySelector('#rock');
-        const paperBtn = document.querySelector('#paper');
-        const scissorsBtn = document.querySelector('#scissors');
-
         rockBtn.disabled = true;
         paperBtn.disabled = true;
         scissorsBtn.disabled = true;
@@ -135,13 +133,12 @@ function updateScore(humanWin, computerWin, tie) {
             playRound();
 
             playAgainBtn.style.display = 'none';
+            gameResultDiv.textContent = ``;
         });
     }
 }
 
 function calculateFinalScore() {
-
-    const gameResultDiv = document.querySelector('#game-result');
 
     if (humanScore > computerScore) {
         console.log(`\nPlayer won the game with ${humanScore} points!`);
@@ -155,6 +152,5 @@ function calculateFinalScore() {
     } else {
         console.log(`\nSomething went wrong.`);
     }
-}
 
-playRound();
+}
